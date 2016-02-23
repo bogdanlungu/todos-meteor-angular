@@ -10,7 +10,11 @@
   </header>
 
   <ul>
-    <li ng-repeat="task in tasks">{{task.text}}</li>
+    <li ng-repeat="task in tasks">{{task.title}}
+      <ul>
+        <li>{{task.text}}</li>
+      </li>
+    </li>
   </ul>
 
 </div>
