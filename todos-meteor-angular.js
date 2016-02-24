@@ -1,5 +1,6 @@
 Tasks = new Mongo.Collection('tasks');
 
+/*
 if (Tasks.find().count() === 0) {
    Tasks.insert({
     title: 'Buy grocerries',
@@ -10,10 +11,12 @@ if (Tasks.find().count() === 0) {
      text: 'At the service'
     });
    Tasks.insert({
-     title: 'Lear JavaScript',
+     title: 'Learn JavaScript',
      text: 'From the books'
    });
 }
+*/
+
 
 if (Meteor.isClient) {
   angular.module('simple-todos',['angular-meteor']);
@@ -25,5 +28,29 @@ if (Meteor.isClient) {
          return Tasks.find({}, {sort: {createdAt: -1}});
          }
       });
+
+      $scope.addTask = function (title, text) {
+        /*
+        $scope.tasks.push( {
+          title: title,
+          text: text }
+        );
+        */
+
+        Tasks.insert({
+          title: title,
+          text: text
+        });
+      };
+
     }]);
 }
+
+/*
+Meteor.call('removeAllTasks');
+Meteor.methods({
+  removeAllTasks: function() {
+        return Tasks.remove({})
+  }
+});
+*/

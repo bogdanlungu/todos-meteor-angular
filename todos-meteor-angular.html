@@ -7,10 +7,18 @@
 
   <header>
     <h1>Todo List</h1>
+
+    <form class="new-task">
+      <input ng-model="title" type="text" name=title placeholder="Tasks's title" />
+      <input ng-model="text" type="text" name=title placeholder="Tasks's text" />
+    </form>
+
+    <button ng-click="addTask(title, text)" class="task-button">Add task</button>
   </header>
 
+
   <ul>
-    <li ng-repeat="task in tasks">{{task.title}}
+    <li ng-repeat="task in tasks"><strong>{{task.title}}</strong>
       <ul>
         <li>{{task.text}}</li>
       </li>
