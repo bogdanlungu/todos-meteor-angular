@@ -18,7 +18,10 @@
 
 
   <ul>
-    <li ng-repeat="task in tasks"><strong>{{task.title}}</strong>
+    <li ng-repeat="task in tasks">
+      <button class="delete" ng-click="tasks.remove(task)">&times;</button>
+      <input type="checkbox" ng-model="task.checked" class="toggle-checked" />
+      <strong>{{task.title}}</strong>
       <ul>
         <li>{{task.text}}</li>
       </li>
