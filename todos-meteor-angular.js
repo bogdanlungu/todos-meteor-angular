@@ -22,35 +22,39 @@ if (Meteor.isClient) {
   angular.module('simple-todos',['angular-meteor']);
   angular.module('simple-todos').controller('TodosListCtrl', ['$scope',
     function ($scope) {
-      // $scope.tasks = $scope.$meteorCollection(Tasks); // deprecated
       $scope.helpers({
          tasks() {
-         return Tasks.find({}, {sort: {createdAt: -1}});
+            return Tasks.find({}, {sort: {createdAt: -1}});
          }
       });
 
       $scope.addTask = function (title, text) {
-        /*
-        $scope.tasks.push( {
-          title: title,
-          text: text }
-        );
-        */
+      if(!((typeof title === 'undefined') && (typeof text === 'undefined'))){
+        if((title.length > 0) && (text.length > 3)){
+          Tasks.insert({
+           title: title,
+           text: text
+          });
 
-        Tasks.insert({
-          title: title,
-          text: text
-        });
-      };
-
+          // reset the fields
+          $scope.title = '';
+          $scope.text = '';
+        }else{
+          alert("Please complete the fields");
+        }
+      }else{
+        alert("Please complete the fields");
+      }
+    }
     }]);
-}
 
+// Meteor.call('removeAllTasks');
+
+}
 /*
-Meteor.call('removeAllTasks');
 Meteor.methods({
   removeAllTasks: function() {
-        return Tasks.remove({})
+        return Tasks.remove({});
   }
 });
 */
