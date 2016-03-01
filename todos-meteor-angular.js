@@ -46,15 +46,29 @@ if (Meteor.isClient) {
         alert("Please complete the fields");
       }
     }
+
+    $scope.removeTask = function(task){
+      Meteor.call('removeTask', task, function(error, result){
+        if(error){
+          alert('There is an error the task was not removed');
+        }else{
+          alert("Removed!");
+        }
+        });
+    }
+
     }]);
 
 // Meteor.call('removeAllTasks');
 
 }
-/*
+
 Meteor.methods({
   removeAllTasks: function() {
-        return Tasks.remove({});
+    return Tasks.remove({});
+  },
+
+  removeTask: function(id){
+    Tasks.remove({_id: id});
   }
 });
-*/
