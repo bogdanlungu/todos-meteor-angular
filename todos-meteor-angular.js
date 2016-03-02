@@ -28,7 +28,7 @@ if (Meteor.isClient) {
          }
       });
 
-      $scope.addTask = function (title, text) {
+    $scope.addTask = function (title, text) {
       if(!((typeof title === 'undefined') && (typeof text === 'undefined'))){
         if((title.length > 0) && (text.length > 3)){
           Tasks.insert({
@@ -57,6 +57,16 @@ if (Meteor.isClient) {
         });
     }
 
+    $scope.taskDone = function(task){
+      Meteor.call('updateTask', task, function(error, result){
+        if(error){
+          alert('The task could not be updated');
+        }else{
+          alert("Done!");
+        }
+        });
+    }
+
     }]);
 
 // Meteor.call('removeAllTasks');
@@ -70,5 +80,12 @@ Meteor.methods({
 
   removeTask: function(id){
     Tasks.remove({_id: id});
+  },
+
+  updateTask: function(id){
+    var tasksDetails = {
+      done: true
+    }
+    Tasks.update({_id: id}, {$set: tasksDetails});
   }
 });
