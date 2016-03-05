@@ -4,15 +4,18 @@ Tasks = new Mongo.Collection('tasks');
 if (Tasks.find().count() === 0) {
    Tasks.insert({
     title: 'Buy grocerries',
-    text: 'From the marketplace'
+    text: 'From the marketplace',
+    done: false
    });
    Tasks.insert({
      title: 'Fix the car',
-     text: 'At the service'
+     text: 'At the service',
+     done: false
     });
    Tasks.insert({
      title: 'Learn JavaScript',
-     text: 'From the books'
+     text: 'From the books',
+     done: false
    });
 }
 */
@@ -52,19 +55,28 @@ if (Meteor.isClient) {
         if(error){
           alert('There is an error the task was not removed');
         }else{
-          alert("Removed!");
+          // alert("Removed!");
         }
-        });
+      });
+    }
+
+    $scope.checkTask = function(task){
+      var taskDetails = Tasks.findOne({_id: task});
+      return taskDetails.done;
     }
 
     $scope.taskDone = function(task){
-      Meteor.call('updateTask', task, function(error, result){
-        if(error){
-          alert('The task could not be updated');
-        }else{
-          alert("Done!");
-        }
-        });
+      var status = $scope.checkTask(task);
+      if(typeof(status) === "boolean"){
+         status = !status;
+         Meteor.call('updateTask', task, status, function(error, result){
+           if(error){
+             alert('There is an error the task could not be updated');
+           }
+         });
+      }else{
+        alert("There is an error, the status is not boolean");
+      }
     }
 
     }]);
@@ -82,9 +94,9 @@ Meteor.methods({
     Tasks.remove({_id: id});
   },
 
-  updateTask: function(id){
+  updateTask: function(id, status){
     var tasksDetails = {
-      done: true
+      done: status
     }
     Tasks.update({_id: id}, {$set: tasksDetails});
   }

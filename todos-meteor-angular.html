@@ -20,7 +20,7 @@
   <ul>
     <li ng-repeat="task in tasks">
       <button class="delete" ng-click="removeTask(task._id)">&times;</button>
-      <input type="checkbox" ng-model="taskDone(task._id)" class="toggle-checked" />
+      <input type="checkbox" ng-checked="checkTask(task._id)" ng-click="taskDone(task._id)" class="toggle-checked" />
       <strong>{{task.title}}</strong>
       <ul>
         <li>{{task.text}}</li>
