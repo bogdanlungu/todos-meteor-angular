@@ -27,7 +27,11 @@ if (Meteor.isClient) {
     function ($scope) {
       $scope.helpers({
          tasks() {
-            return Tasks.find({}, {sort: {createdAt: -1}});
+            return Tasks.find({done: false}, {sort: {createdAt: -1}});
+         },
+
+         tasks_done() {
+            return Tasks.find({done: true}, {sort: {createdAt: -1}});
          }
       });
 
@@ -36,7 +40,8 @@ if (Meteor.isClient) {
         if((title.length > 0) && (text.length > 3)){
           Tasks.insert({
            title: title,
-           text: text
+           text: text,
+           done: false
           });
 
           // reset the fields

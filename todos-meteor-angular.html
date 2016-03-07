@@ -24,7 +24,19 @@
       <strong>{{task.title}}</strong>
       <ul>
         <li>{{task.text}}</li>
-      </li>
+      </ul>
+    </li>
+  </ul>
+
+  <br><h2>Finished tasks:</h2>
+  <ul>
+    <li ng-repeat="task2 in tasks_done">
+      <button class="delete" ng-click="removeTask(task2._id)">&times;</button>
+      <input type="checkbox" ng-checked="checkTask(task2._id)" ng-click="taskDone(task2._id)" class="toggle-checked" />
+      <strong>{{task2.title}}</strong>
+      <ul>
+        <li>{{task2.text}}</li>
+      </ul>
     </li>
   </ul>
 
